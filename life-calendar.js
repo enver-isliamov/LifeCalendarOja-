@@ -2,22 +2,23 @@
 
 const calendarContainer = document.getElementById("calendarContainer");
 const shapeSelect = document.getElementById("shapeSelect");
+const yearAInput = document.getElementById("yearA");
+const yearBInput = document.getElementById("yearB");
 
 const startAge = 0;
 const maxAge = 86;
 const weeksPerYear = 52;
 
-const partnerA = { birthYear: 1989 };
-const partnerB = { birthYear: 2002 }; // младший партнер
-const currentYear = new Date().getFullYear();
-
 function generateCalendar() {
   calendarContainer.innerHTML = "";
   const shape = shapeSelect.value;
+  const yearA = parseInt(yearAInput.value || "1989");
+  const yearB = parseInt(yearBInput.value || "2002");
+
   calendarContainer.className = `${shape}`;
 
   for (let age = startAge; age <= maxAge; age++) {
-    const year = partnerA.birthYear + age;
+    const year = yearA + age;
 
     const row = document.createElement("div");
     row.className = "flex items-center mb-1";
@@ -31,7 +32,7 @@ function generateCalendar() {
       const cell = document.createElement("div");
       cell.className = "cell";
 
-      const bAge = year - partnerB.birthYear;
+      const bAge = year - yearB;
       const aAge = age;
 
       if (aAge > bAge) cell.classList.add("older-partner");
@@ -65,4 +66,7 @@ function downloadAs(type) {
 }
 
 shapeSelect.addEventListener("change", generateCalendar);
+yearAInput.addEventListener("input", generateCalendar);
+yearBInput.addEventListener("input", generateCalendar);
+
 window.onload = generateCalendar;
