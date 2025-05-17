@@ -37,21 +37,30 @@
       <input id="name" type="text" placeholder="Введите фамилию..." class="border p-2 w-full rounded">
     </div>
 
-    <div class="mb-4">
-      <label class="mr-4">Форма ячеек:</label>
+    <div class="mb-4 flex flex-wrap gap-4 items-center">
+      <label>Форма ячеек:</label>
       <select id="shapeSelect" class="border p-2 rounded">
         <option value="circle">Круги</option>
         <option value="rounded">Квадраты с закруглёнными углами</option>
       </select>
+      <label for="yearA">Год рождения A:</label>
+      <input type="number" id="yearA" value="1989" class="border p-2 w-24 rounded">
+      <label for="yearB">Год рождения B:</label>
+      <input type="number" id="yearB" value="2002" class="border p-2 w-24 rounded">
     </div>
 
-    <div id="calendarContainer" class="rounded border p-4 overflow-x-auto"></div>
+    <div class="mb-2 text-sm text-gray-600">
+      <span class="inline-block w-4 h-4 mr-1 align-middle bg-gray-800"></span> Прожитые недели
+      <span class="inline-block w-4 h-4 mx-2 align-middle bg-gray-400"></span> Прожито старшим партнёром
+    </div>
+
+    <div id="calendarContainer" class="rounded border p-2 overflow-x-auto"></div>
 
     <div class="my-4">
       <input id="motto" type="text" placeholder="Введите мотивационную фразу..." class="border p-2 w-full rounded">
     </div>
 
-    <div class="flex gap-2">
+    <div class="flex gap-2 flex-wrap">
       <button onclick="downloadAs('png')" class="bg-blue-500 text-white px-4 py-2 rounded">Скачать PNG</button>
       <button onclick="downloadAs('pdf')" class="bg-green-500 text-white px-4 py-2 rounded">Скачать PDF</button>
     </div>
