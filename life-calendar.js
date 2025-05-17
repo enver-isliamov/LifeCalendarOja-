@@ -13,43 +13,45 @@ const today = new Date();
 function generateCalendar() {
   calendarContainer.innerHTML = "";
   const shape = shapeSelect.value;
-  const yearA = parseInt(yearAInput.value || "1989");
-  const yearB = parseInt(yearBInput.value || "2002");
+  const yearA = parseInt(yearAInput?.value || "1989");
+  const yearB = parseInt(yearBInput?.value || "2002");
 
-  calendarContainer.className = `${shape}`;
+  calendarContainer.className = `${shape} flex flex-col`;
 
   for (let age = startAge; age <= maxAge; age++) {
     const year = yearA + age;
 
     const row = document.createElement("div");
-    row.className = "flex items-center mb-1";
+    row.className = "flex items-center flex-wrap mb-1";
 
     const label = document.createElement("div");
-    label.className = "text-sm w-20 text-right pr-2 text-gray-600";
+    label.className = "text-xs w-20 text-right pr-2 text-gray-600 shrink-0";
     label.textContent = `${age} (${year})`;
     row.appendChild(label);
+
+    const weekWrap = document.createElement("div");
+    weekWrap.className = "flex flex-wrap gap-[1px]";
 
     for (let week = 0; week < weeksPerYear; week++) {
       const cell = document.createElement("div");
       cell.className = "cell";
 
       const weekDate = new Date(year, 0, 1 + week * 7);
+      const bAge = year - yearB;
+      const aAge = age;
 
       if (weekDate <= today) {
         cell.style.backgroundColor = "#111827";
       }
-
-      const bAge = year - yearB;
-      const aAge = age;
-
       if (aAge > bAge) {
         cell.classList.add("older-partner");
         if (weekDate <= today) cell.style.backgroundColor = "#6b7280";
       }
 
-      row.appendChild(cell);
+      weekWrap.appendChild(cell);
     }
 
+    row.appendChild(weekWrap);
     calendarContainer.appendChild(row);
   }
 }
@@ -76,7 +78,7 @@ function downloadAs(type) {
 }
 
 shapeSelect.addEventListener("change", generateCalendar);
-yearAInput.addEventListener("input", generateCalendar);
-yearBInput.addEventListener("input", generateCalendar);
+yearAInput?.addEventListener("input", generateCalendar);
+yearBInput?.addEventListener("input", generateCalendar);
 
 window.onload = generateCalendar;
