@@ -13,24 +13,26 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     .cell {
-      width: 12px;
-      height: 12px;
-      margin: 1px;
-      background-color: #ccc;
+      width: 14px;
+      height: 14px;
+      margin: 0.5px;
+      background-color: #d1d5db;
       display: inline-block;
-      transition: background-color 0.3s, transform 0.2s;
     }
-    .cell:hover {
-      transform: scale(1.1);
-    }
-    .circle .cell {
+    .cell.circle {
       border-radius: 9999px;
     }
-    .rounded .cell {
-      border-radius: 6px;
+    .cell.rounded {
+      border-radius: 4px;
     }
     .older-partner {
-      background-color: #eee;
+      background-color: #e5e7eb;
+    }
+    .filled {
+      background-color: #1f2937;
+    }
+    .filled.older-partner {
+      background-color: #9ca3af;
     }
   </style>
 </head>
@@ -46,15 +48,18 @@
         <option value="single">Один человек</option>
         <option value="couple" selected>Пара</option>
       </select>
+
       <label>Форма ячеек:</label>
-      <select id="shapeSelect" class="border p-2 rounded">
-        <option value="circle">Круги</option>
-        <option value="rounded">Квадраты с закруглёнными углами</option>
-      </select>
-      <label for="yearA">Год рождения A:</label>
-      <input type="number" id="yearA" value="1989" class="border p-2 w-24 rounded">
-      <label for="yearB" id="labelYearB">Год рождения B:</label>
-      <input type="number" id="yearB" value="2002" class="border p-2 w-24 rounded">
+      <div id="shapeButtons" class="flex gap-2">
+        <button data-shape="circle" class="shape-btn border px-3 py-1 rounded bg-gray-200">Круги</button>
+        <button data-shape="rounded" class="shape-btn border px-3 py-1 rounded">Скругленные квадраты</button>
+      </div>
+
+      <label for="birthA">Дата рождения A:</label>
+      <input type="date" id="birthA" value="1989-01-01" class="border p-2 rounded">
+
+      <label for="birthB" id="labelBirthB">Дата рождения B:</label>
+      <input type="date" id="birthB" value="2002-01-01" class="border p-2 rounded">
     </div>
 
     <div class="mb-2 text-sm text-gray-600">
@@ -62,7 +67,7 @@
       <span class="inline-block w-4 h-4 mx-2 align-middle bg-gray-400"></span> Прожито старшим партнёром
     </div>
 
-    <div id="calendarContainer" class="rounded border p-2 overflow-x-auto"></div>
+    <div id="calendarContainer" class="rounded border p-2 overflow-x-auto whitespace-nowrap"></div>
 
     <div class="my-4">
       <input id="motto" type="text" placeholder="Введите мотивационную фразу..." class="border p-2 w-full rounded">
@@ -76,13 +81,24 @@
 
   <script>
     const modeSelect = document.getElementById("modeSelect");
-    const yearBField = document.getElementById("yearB");
-    const labelYearB = document.getElementById("labelYearB");
+    const birthB = document.getElementById("birthB");
+    const labelBirthB = document.getElementById("labelBirthB");
 
     modeSelect.addEventListener("change", () => {
       const isCouple = modeSelect.value === "couple";
-      yearBField.style.display = isCouple ? "inline-block" : "none";
-      labelYearB.style.display = isCouple ? "inline-block" : "none";
+      birthB.style.display = isCouple ? "inline-block" : "none";
+      labelBirthB.style.display = isCouple ? "inline-block" : "none";
+    });
+
+    const shapeButtons = document.querySelectorAll(".shape-btn");
+    let selectedShape = "circle";
+    shapeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        shapeButtons.forEach(b => b.classList.remove("bg-gray-300"));
+        btn.classList.add("bg-gray-300");
+        selectedShape = btn.dataset.shape;
+        generateCalendar();
+      });
     });
   </script>
 </body>
