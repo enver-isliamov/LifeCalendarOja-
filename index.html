@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Календарь жизни</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    window.jsPDF = window.jspdf.jsPDF;
+  </script>
+  <script defer src="life-calendar.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .cell {
+      width: 12px;
+      height: 12px;
+      margin: 1px;
+      background-color: #ccc;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+    .circle .cell {
+      border-radius: 9999px;
+    }
+    .rounded .cell {
+      border-radius: 6px;
+    }
+    .older-partner {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 p-4">
+  <div class="max-w-screen-lg mx-auto">
+    <div class="mb-4">
+      <input id="name" type="text" placeholder="Введите фамилию..." class="border p-2 w-full rounded">
+    </div>
+
+    <div class="mb-4">
+      <label class="mr-4">Форма ячеек:</label>
+      <select id="shapeSelect" class="border p-2 rounded">
+        <option value="circle">Круги</option>
+        <option value="rounded">Квадраты с закруглёнными углами</option>
+      </select>
+    </div>
+
+    <div id="calendarContainer" class="rounded border p-4 overflow-x-auto"></div>
+
+    <div class="my-4">
+      <input id="motto" type="text" placeholder="Введите мотивационную фразу..." class="border p-2 w-full rounded">
+    </div>
+
+    <div class="flex gap-2">
+      <button onclick="downloadAs('png')" class="bg-blue-500 text-white px-4 py-2 rounded">Скачать PNG</button>
+      <button onclick="downloadAs('pdf')" class="bg-green-500 text-white px-4 py-2 rounded">Скачать PDF</button>
+    </div>
+  </div>
+</body>
+</html>
