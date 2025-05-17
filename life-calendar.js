@@ -8,6 +8,7 @@ const yearBInput = document.getElementById("yearB");
 const startAge = 0;
 const maxAge = 86;
 const weeksPerYear = 52;
+const today = new Date();
 
 function generateCalendar() {
   calendarContainer.innerHTML = "";
@@ -32,10 +33,19 @@ function generateCalendar() {
       const cell = document.createElement("div");
       cell.className = "cell";
 
+      const weekDate = new Date(year, 0, 1 + week * 7);
+
+      if (weekDate <= today) {
+        cell.style.backgroundColor = "#111827";
+      }
+
       const bAge = year - yearB;
       const aAge = age;
 
-      if (aAge > bAge) cell.classList.add("older-partner");
+      if (aAge > bAge) {
+        cell.classList.add("older-partner");
+        if (weekDate <= today) cell.style.backgroundColor = "#6b7280";
+      }
 
       row.appendChild(cell);
     }
